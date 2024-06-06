@@ -1,0 +1,10 @@
+{
+    "dependencies": {
+        "axios": "^1.6.7",
+        "express": "^4.17.2",
+        "nodemon": "^3.0.3"
+    },
+    "scripts": {
+		"start": "nodemon server.js"
+	}
+}
