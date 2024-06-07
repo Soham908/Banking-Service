@@ -1,6 +1,29 @@
 import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material";
 
 const TransferMoney = () => {
+  const textFieldStyles = {
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "#FFFFFF3A",
+      },
+      "&:hover fieldset": {
+        borderColor: "lightgray",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "lightgray",
+      },
+    },
+    "& .MuiInputLabel-root": {
+      color: "#FFFFFFAA",
+    },
+    "& .MuiInputLabel-root.Mui-focused": {
+      color: "lightgray",
+    },
+    "& input": {
+      color: "white",
+    },
+  };
+
   return (
     <Grid item xs={6} sx={{ height: "100%" }}>
       <Paper
@@ -13,33 +36,48 @@ const TransferMoney = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "flex-start",
+          color: "white",
+          backgroundColor: "#050505",
+          borderColor: "#847E6A",
         }}
       >
         <Typography
           variant="h6" // Larger, bolder text for the heading
           sx={{ marginBottom: 2 }} // Adds space below the heading
         >
-          Add Money to Transfer
+          Transfer Money to someone
         </Typography>
         <TextField
-          sx={{ marginBottom: 2, width: "100%",borderRadius: 8, }} // Full width and margin below
+          sx={{
+            marginBottom: 2,
+            width: "100%",
+            borderRadius: 20,
+            ...textFieldStyles,
+          }} // Full width and margin below
           id="amount"
           label="Amount"
-          type="number" 
+          type="number"
           variant="outlined"
         />
+
         <TextField
-          sx={{ marginBottom: 2, width: "100%",borderRadius: 20 }} // Full width and margin below
+          sx={{
+            marginBottom: 2,
+            width: "100%",
+            borderRadius: 20,
+            ...textFieldStyles,
+          }} // Full width and margin below
           id="description"
           label="Recipient"
           variant="outlined"
+          color="secondary"
         />
 
         <Button
           variant="contained" // Solid button with primary color
           sx={{ alignSelf: "flex-start", marginTop: 2 }} // Align button to the start and margin at the top
         >
-          Add Money
+          Transfer Money
         </Button>
       </Paper>
     </Grid>

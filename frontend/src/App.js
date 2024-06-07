@@ -20,7 +20,9 @@ const App = () => {
             width: '17%', 
             boxSizing: 'border-box',
             backgroundColor: '#f4f4f4', // Light background similar to YouTube
-            padding: '0.5%'
+            padding: '0.5%',
+            color:'white',
+            backgroundColor: '#0B0D0E'
           },
         }}
       >
@@ -36,7 +38,7 @@ const App = () => {
               key={item.text} 
               sx={{ 
                 padding: '8px 16px',
-                '&:hover': { backgroundColor: '#e0e0e0' }, // Light gray on hover
+                '&:hover': { backgroundColor: 'black' }, // Light gray on hover
                 '&.Mui-selected': { 
                   backgroundColor: '#d0d0d0', 
                   '&:hover': { backgroundColor: '#c0c0c0' } 
@@ -45,7 +47,7 @@ const App = () => {
                 marginTop: '5%'
               }}
             >
-              <ListItemIcon sx={{ minWidth: 36 }}>
+              <ListItemIcon sx={{ minWidth: 36, color:'white' }}>
                 {item.icon}
               </ListItemIcon>
               <ListItemText primary={item.text} />
@@ -55,7 +57,7 @@ const App = () => {
       </Drawer>
 
       {/* Main Content */}
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 3, backgroundColor:'black' }}>
         <Grid container spacing={2} sx={{ height: '100%' }}>
           {/* Top Half */}
           <Grid item xs={12} sx={{ height: '50%' }}>
@@ -69,7 +71,10 @@ const App = () => {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center', // Centers content vertically
-            boxSizing: 'border-box' // Ensure padding doesn't affect the overall height
+            boxSizing: 'border-box', // Ensure padding doesn't affect the overall height
+            color:'white',
+            backgroundColor: '#050505',
+            borderColor:'#847E6A'
           }}
         >
           <Typography
