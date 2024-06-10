@@ -1,4 +1,6 @@
 import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material";
+import { useState } from "react";
+import { TransferMoneyFromAccount } from "../../actions/money_action";
 
 const TransferMoney = () => {
   const textFieldStyles = {
@@ -23,6 +25,20 @@ const TransferMoney = () => {
       color: "white",
     },
   };
+
+  const [amountTransfer, setAmountTransfer] = useState("")
+  const [descriptionTransfer, setDescriptionTransfer] = useState("")
+
+  const handleSubmit = async () => {
+    const data = {
+      username: "Soham",
+      amount: parseInt(amountTransfer) * -1,
+      description: descriptionTransfer,
+      transactionType: "Credit"
+    }
+    const transfer = await TransferMoneyFromAccount(data)
+    console.log(transfer);
+  }
 
   return (
     <Grid item xs={6} sx={{ height: "100%" }}>
@@ -58,6 +74,8 @@ const TransferMoney = () => {
           label="Amount"
           type="number"
           variant="outlined"
+          value={amountTransfer}
+          onChange={(event) => {setAmountTransfer(event.target.value)}}
         />
 
         <TextField
@@ -71,11 +89,14 @@ const TransferMoney = () => {
           label="Recipient"
           variant="outlined"
           color="secondary"
+          value={descriptionTransfer}
+          onChange={(event) => {setDescriptionTransfer(event.target.value)}}
         />
 
         <Button
           variant="contained"
           sx={{ alignSelf: "flex-start", marginTop: 2 }}
+          onClick={handleSubmit}
         >
           Transfer Money
         </Button>

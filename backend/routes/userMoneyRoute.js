@@ -18,6 +18,7 @@ router.post("/addMoney", async (req, res) => {
         transactionHistory: {
           amount: req.body.amount,
           description: req.body.description,
+          transactionType: req.body.transactionType
         },
       },
     },
@@ -26,12 +27,18 @@ router.post("/addMoney", async (req, res) => {
   res.json(addMoney);
 });
 
-router.post("/transaction", async (req, res) => {
+router.post("/transferMoney", async (req, res) => {
   const transaction = await userModel.findOneAndUpdate(
     { username: req.body.username },
     {
       $inc: { balanceAmount: req.body.amount },
-      $push: { transactionHistory: req.body.transaction },
+      $push: {
+        transactionHistory: {
+          amount: req.body.amount,
+          description: req.body.description,
+          transactionType: req.body.transactionType
+        },
+      },
     },
     { new: true }
   );

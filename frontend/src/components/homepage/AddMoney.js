@@ -1,5 +1,5 @@
 import { Box, Button, Grid, TextField, Typography, Paper } from "@mui/material";
-import { AddMoneyToUserAccount } from "../../actions/add_money_action";
+import { AddMoneyToUserAccount } from "../../actions/money_action";
 import { useState } from "react";
 
 const AddMoney = () => {
@@ -26,30 +26,31 @@ const AddMoney = () => {
     },
   };
 
-  const [addAmount, setAddAmount] = useState("")
-  const [addDescription, setAddDescription] = useState('')
+  const [addAmount, setAddAmount] = useState("");
+  const [addDescription, setAddDescription] = useState("");
 
   const handleSubmit = async () => {
     const data = {
       username: "Soham",
       amount: addAmount,
-      description: addDescription
-    }
-    const response = await AddMoneyToUserAccount(data) 
+      description: addDescription,
+      transactionType: "Debit"
+    };
+    const response = await AddMoneyToUserAccount(data);
     console.log(response);
-    setAddAmount("")
-    setAddDescription("")
-  }
+    setAddAmount("");
+    setAddDescription("");
+  };
 
   return (
     <Grid item xs={6} sx={{ height: "100%" }}>
       <Paper
-        elevation={3} 
+        elevation={3}
         sx={{
-          padding: 4, 
-          borderRadius: 8, 
-          border: "1px solid #ddd", 
-          height: "auto", 
+          padding: 4,
+          borderRadius: 8,
+          border: "1px solid #ddd",
+          height: "auto",
           display: "flex",
           flexDirection: "column",
           alignItems: "flex-start",
@@ -58,10 +59,7 @@ const AddMoney = () => {
           borderColor: "#847E6A",
         }}
       >
-        <Typography
-          variant="h6"
-          sx={{ marginBottom: 2 }}
-        >
+        <Typography variant="h6" sx={{ marginBottom: 2 }}>
           Add Money to Balance
         </Typography>
         <TextField
@@ -76,7 +74,9 @@ const AddMoney = () => {
           type="number"
           variant="outlined"
           value={addAmount}
-          onChange={(event) => {setAddAmount(event.target.value)}}
+          onChange={(event) => {
+            setAddAmount(event.target.value);
+          }}
         />
 
         <TextField
@@ -91,7 +91,9 @@ const AddMoney = () => {
           variant="outlined"
           color="secondary"
           value={addDescription}
-          onChange={(event) => {setAddDescription(event.target.value)}}
+          onChange={(event) => {
+            setAddDescription(event.target.value);
+          }}
         />
 
         <Button
