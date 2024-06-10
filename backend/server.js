@@ -5,9 +5,11 @@ const mongoose = require("mongoose");
 const userAuth = require("./routes/userAuthRoute");
 const userMoney = require("./routes/userMoneyRoute");
 require("dotenv").config();
+const cors = require('cors');
+
 
 mongoose
-  .connect(process.env.MONGODB_URI, {
+  .connect(process.env.MONGO_URI, {
     dbName: "banking-service",
   })
   .then(() => {
@@ -18,10 +20,12 @@ mongoose
   });
 
 app.use(express.json());
+app.use(cors());
+
 
 app.use("/userAuth", userAuth);
 app.use("/userMoney", userMoney);
 
-app.listen(3001, () => {
+app.listen(process.env.PORT, () => {
   console.log("Server started, second try baby gurl");
 });

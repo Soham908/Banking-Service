@@ -12,7 +12,15 @@ router.get("/balance", async (req, res) => {
 router.post("/addMoney", async (req, res) => {
   const addMoney = await userModel.findOneAndUpdate(
     { username: req.body.username },
-    { balanceAmount: req.body.amount },
+    {
+      $inc: { balanceAmount: req.body.amount },
+      $push: {
+        transactionHistory: {
+          amount: req.body.amount,
+          description: req.body.description,
+        },
+      },
+    },
     { new: true, upsert: true }
   );
   res.json(addMoney);
@@ -25,10 +33,10 @@ router.post("/transaction", async (req, res) => {
       $inc: { balanceAmount: req.body.amount },
       $push: { transactionHistory: req.body.transaction },
     },
-    {new: true}
+    { new: true }
   );
   console.log(transaction);
-  res.json(transaction)
+  res.json(transaction);
 });
 
 module.exports = router;

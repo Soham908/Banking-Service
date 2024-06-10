@@ -1,4 +1,6 @@
 import { Box, Button, Grid, TextField, Typography, Paper } from "@mui/material";
+import { AddMoneyToUserAccount } from "../../actions/add_money_action";
+import { useState } from "react";
 
 const AddMoney = () => {
   const textFieldStyles = {
@@ -24,15 +26,30 @@ const AddMoney = () => {
     },
   };
 
+  const [addAmount, setAddAmount] = useState("")
+  const [addDescription, setAddDescription] = useState('')
+
+  const handleSubmit = async () => {
+    const data = {
+      username: "Soham",
+      amount: addAmount,
+      description: addDescription
+    }
+    const response = await AddMoneyToUserAccount(data) 
+    console.log(response);
+    setAddAmount("")
+    setAddDescription("")
+  }
+
   return (
     <Grid item xs={6} sx={{ height: "100%" }}>
       <Paper
-        elevation={3} // This adds a shadow to the Paper component
+        elevation={3} 
         sx={{
-          padding: 4, // Adds padding inside the card
-          borderRadius: 8, // Rounds the corners
-          border: "1px solid #ddd", // Light gray border
-          height: "auto", // Allows the card to adjust height based on content
+          padding: 4, 
+          borderRadius: 8, 
+          border: "1px solid #ddd", 
+          height: "auto", 
           display: "flex",
           flexDirection: "column",
           alignItems: "flex-start",
@@ -42,8 +59,8 @@ const AddMoney = () => {
         }}
       >
         <Typography
-          variant="h6" // Larger, bolder text for the heading
-          sx={{ marginBottom: 2 }} // Adds space below the heading
+          variant="h6"
+          sx={{ marginBottom: 2 }}
         >
           Add Money to Balance
         </Typography>
@@ -53,11 +70,13 @@ const AddMoney = () => {
             width: "100%",
             borderRadius: 20,
             ...textFieldStyles,
-          }} // Full width and margin below
+          }}
           id="amount"
           label="Amount"
           type="number"
           variant="outlined"
+          value={addAmount}
+          onChange={(event) => {setAddAmount(event.target.value)}}
         />
 
         <TextField
@@ -66,16 +85,19 @@ const AddMoney = () => {
             width: "100%",
             borderRadius: 20,
             ...textFieldStyles,
-          }} // Full width and margin below
+          }}
           id="description"
           label="Description"
           variant="outlined"
           color="secondary"
+          value={addDescription}
+          onChange={(event) => {setAddDescription(event.target.value)}}
         />
 
         <Button
-          variant="contained" // Solid button with primary color
-          sx={{ alignSelf: "flex-start", marginTop: 2 }} // Align button to the start and margin at the top
+          variant="contained"
+          sx={{ alignSelf: "flex-start", marginTop: 2 }}
+          onClick={handleSubmit}
         >
           Add Money
         </Button>
