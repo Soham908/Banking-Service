@@ -1,21 +1,29 @@
-const express = require('express')
-const userModel = require('../models/userModel')
-const router = express.Router()
+const express = require("express");
+const userModel = require("../models/userModel");
+const router = express.Router();
 
-router.post('/register', async (req,res) => {
-    const register = await userModel.create({
-        username: req.body.username,
-        password: req.body.password,
-        balanceAmount: 1000
-    })
-    console.log(register);
-    res.json(register)
-})
+router.post("/register", async (req, res) => {
+  const register = await userModel.create({
+    username: req.body.username,
+    password: req.body.password,
+    balanceAmount: 10000,
+    transactionHistory: {
+      description: "Account created bonus",
+      amount: 10000,
+      transactionType: "Debit",
+    },
+  });
+  console.log(register);
+  res.json({ register, success: true });
+});
 
-router.get('/login', async (req, res) => {
-    const login = await userModel.findOne({username: req.body.username, password: req.body.password})
-    console.log(login);
-    res.json(login)
-})
+router.post("/login", async (req, res) => {
+  const login = await userModel.findOne({ username: req.body.username });
+  if (login.password === req.body.password) {
+    res.json({ login, success: true });
+  } else {
+    console.log("wrong password");
+  }
+});
 
-module.exports = router
+module.exports = router;

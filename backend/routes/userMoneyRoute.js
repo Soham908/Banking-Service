@@ -2,9 +2,9 @@ const express = require("express");
 const userModel = require("../models/userModel");
 const router = express.Router();
 
-router.get("/balance", async (req, res) => {
+router.get("/balance/:username", async (req, res) => {
   const fetchUserData = await userModel.findOne({
-    username: req.body.username,
+    username: req.params.username
   });
   res.json(fetchUserData);
 });

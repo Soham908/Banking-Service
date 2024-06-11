@@ -10,9 +10,13 @@ import {
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
-import PersonIcon from "@mui/icons-material/Person";
+import LoginIcon from "@mui/icons-material/Login"
+import { useNavigate } from "react-router-dom";
 
 const DrawerCustom = () => {
+
+  const navigate = useNavigate()
+
   return (
     <Drawer
       variant="permanent"
@@ -33,9 +37,9 @@ const DrawerCustom = () => {
       <Divider />
       <List>
         {[
-          { text: "HomePage", icon: <HomeIcon /> },
-          { text: "Transaction", icon: <AccountBalanceWalletIcon /> },
-          { text: "Profile", icon: <PersonIcon /> },
+          { text: "HomePage", icon: <HomeIcon />, onClick: () => {navigate("/")} },
+          { text: "Transaction History", icon: <AccountBalanceWalletIcon />, onClick: () => {navigate("/transactions")} },
+          { text: "Login", icon: <LoginIcon />, onClick: () => {navigate("/login")}}
         ].map((item, index) => (
           <ListItemButton
             key={item.text}
@@ -49,6 +53,7 @@ const DrawerCustom = () => {
               borderRadius: 4,
               marginTop: "5%",
             }}
+            onClick={item.onClick}
           >
             <ListItemIcon sx={{ minWidth: 36, color: "white" }}>
               {item.icon}

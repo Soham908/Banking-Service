@@ -1,45 +1,27 @@
 import { Box, Button, Grid, TextField, Typography, Paper } from "@mui/material";
 import { AddMoneyToUserAccount } from "../../actions/money_action";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { TextFieldStyle } from "../../constants/Constants";
+import { UserContext } from "../../App";
 
 const AddMoney = () => {
-  const textFieldStyles = {
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: "#FFFFFF3A",
-      },
-      "&:hover fieldset": {
-        borderColor: "lightgray",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "lightgray",
-      },
-    },
-    "& .MuiInputLabel-root": {
-      color: "#FFFFFFAA",
-    },
-    "& .MuiInputLabel-root.Mui-focused": {
-      color: "lightgray",
-    },
-    "& input": {
-      color: "white",
-    },
-  };
 
-  const [addAmount, setAddAmount] = useState("");
-  const [addDescription, setAddDescription] = useState("");
-
+  const [amountAdd, setAmountAdd] = useState("");
+  const [descriptionAdd, setDescriptionAdd] = useState("");
+  const { userData, setUserData } = useContext(UserContext)
+  
   const handleSubmit = async () => {
     const data = {
-      username: "Soham",
-      amount: addAmount,
-      description: addDescription,
+      username: userData.username,
+      amount: amountAdd,
+      description: descriptionAdd,
       transactionType: "Debit"
     };
     const response = await AddMoneyToUserAccount(data);
     console.log(response);
-    setAddAmount("");
-    setAddDescription("");
+    setUserData(response)
+    setAmountAdd("");
+    setDescriptionAdd("");
   };
 
   return (
@@ -60,22 +42,22 @@ const AddMoney = () => {
         }}
       >
         <Typography variant="h6" sx={{ marginBottom: 2 }}>
-          Add Money to Balance
+          Add Money
         </Typography>
         <TextField
           sx={{
             marginBottom: 2,
             width: "100%",
             borderRadius: 20,
-            ...textFieldStyles,
+            ...TextFieldStyle,
           }}
           id="amount"
           label="Amount"
           type="number"
           variant="outlined"
-          value={addAmount}
+          value={amountAdd}
           onChange={(event) => {
-            setAddAmount(event.target.value);
+            setAmountAdd(event.target.value);
           }}
         />
 
@@ -84,15 +66,15 @@ const AddMoney = () => {
             marginBottom: 2,
             width: "100%",
             borderRadius: 20,
-            ...textFieldStyles,
+            ...TextFieldStyle,
           }}
           id="description"
           label="Description"
           variant="outlined"
           color="secondary"
-          value={addDescription}
+          value={descriptionAdd}
           onChange={(event) => {
-            setAddDescription(event.target.value);
+            setDescriptionAdd(event.target.value);
           }}
         />
 

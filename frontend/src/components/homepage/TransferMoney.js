@@ -1,43 +1,27 @@
 import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { TransferMoneyFromAccount } from "../../actions/money_action";
+import { TextFieldStyle } from "../../constants/Constants";
+import { UserContext } from "../../App";
 
 const TransferMoney = () => {
-  const textFieldStyles = {
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: "#FFFFFF3A",
-      },
-      "&:hover fieldset": {
-        borderColor: "lightgray",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "lightgray",
-      },
-    },
-    "& .MuiInputLabel-root": {
-      color: "#FFFFFFAA",
-    },
-    "& .MuiInputLabel-root.Mui-focused": {
-      color: "lightgray",
-    },
-    "& input": {
-      color: "white",
-    },
-  };
 
   const [amountTransfer, setAmountTransfer] = useState("")
   const [descriptionTransfer, setDescriptionTransfer] = useState("")
+  const { userData, setUserData } = useContext(UserContext)
+
 
   const handleSubmit = async () => {
     const data = {
-      username: "Soham",
+      username: userData.username,
       amount: parseInt(amountTransfer) * -1,
       description: descriptionTransfer,
       transactionType: "Credit"
     }
     const transfer = await TransferMoneyFromAccount(data)
-    console.log(transfer);
+    setUserData(transfer)
+    setAmountTransfer("")
+    setDescriptionTransfer("")
   }
 
   return (
@@ -61,14 +45,14 @@ const TransferMoney = () => {
           variant="h6" 
           sx={{ marginBottom: 2 }}
         >
-          Transfer Money to someone
+          Transfer Money
         </Typography>
         <TextField
           sx={{
             marginBottom: 2,
             width: "100%",
             borderRadius: 20,
-            ...textFieldStyles,
+            ...TextFieldStyle,
           }} 
           id="amount"
           label="Amount"
@@ -83,7 +67,7 @@ const TransferMoney = () => {
             marginBottom: 2,
             width: "100%",
             borderRadius: 20,
-            ...textFieldStyles,
+            ...TextFieldStyle,
           }} 
           id="description"
           label="Recipient"
