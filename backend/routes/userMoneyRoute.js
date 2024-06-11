@@ -46,4 +46,9 @@ router.post("/transferMoney", async (req, res) => {
   res.json(transaction);
 });
 
+router.get("/transaction-history/:username", async (req, res) => {
+  const transactions = await userModel.findOne({username: req.params.username})
+  res.json(transactions)
+})
+
 module.exports = router;
