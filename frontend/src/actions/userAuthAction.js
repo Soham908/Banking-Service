@@ -9,7 +9,7 @@ export const userLogin = async (data) => {
 }
 
 export const userRegister = async (data) => {
-    const url = BACKEND_PORT_URL + "/userAuth/register"
+    const url = BACKEND_PORT_URL + "/userAuth/register-new"
     const register = await axios.post(url, data)
     return register.data
 }

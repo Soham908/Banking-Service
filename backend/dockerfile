@@ -1,0 +1,15 @@
+FROM node:21.7.3-alpine3.20
+
+WORKDIR /app
+
+COPY package.json ./
+
+RUN npm install
+
+RUN npm install -g concurrently
+
+COPY . .
+
+EXPOSE 7000
+
+CMD [ "npm", "run", "back-front" ]

@@ -9,6 +9,8 @@
   },
   "scripts": {
     "start": "nodemon server.js",
+    "serve-static": "node serve-site.js",
+    "back-front": "concurrently \"npm run serve-static\" \"npm run start-backend\" ",
     "start-both": "concurrently \"npm run start-frontend\" \"npm run start-backend\" ",
     "start-backend": "nodemon server.js",
     "start-frontend": "cd ../frontend && npm start"

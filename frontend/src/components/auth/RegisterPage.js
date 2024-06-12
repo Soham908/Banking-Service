@@ -27,6 +27,10 @@ const RegisterPage = () => {
     }
   };
 
+  const handleRedirect = () => {
+    navigate("/login")
+  }
+
   return (
     <Container maxWidth="sm">
       <Box
@@ -81,7 +85,7 @@ const RegisterPage = () => {
             Register
           </Button>
           <Typography variant='h6' sx={{ margin: '5%' }}>
-            Already have an account ? <Link href="/login" >Login</Link>
+            Already have an account ? <Link onClick={handleRedirect} >Login</Link>
           </Typography>
       </Box>
     </Container>

@@ -2,7 +2,7 @@ const express = require("express");
 const userModel = require("../models/userModel");
 const router = express.Router();
 
-router.post("/register", async (req, res) => {
+router.post("/register-new", async (req, res) => {
   const register = await userModel.create({
     username: req.body.username,
     password: req.body.password,
@@ -23,6 +23,7 @@ router.post("/login", async (req, res) => {
     res.json({ login, success: true });
   } else {
     console.log("wrong password");
+    res.json({ success: false })
   }
 });
 
