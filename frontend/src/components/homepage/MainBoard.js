@@ -11,11 +11,13 @@ const MainBoard = () => {
   
   useEffect(() => {
     const userDataFetch = async () => {
-      console.log(userName, userData?.username);
-      const url = port + "/userMoney/balance/" + userName || userData.username;
+      const url = port + "/userMoney/balance/" + userName;
       const response = await axios.get(url);
-      console.log(response.data);
-      setUserData(response.data);
+      const data = {
+        username: userName,
+        balanceAmount: response.data.balanceAmount
+      }
+      setUserData(data);
     };
     userDataFetch();
   }, []);

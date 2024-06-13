@@ -1,15 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Container, Box, TextField, Button, Typography, Link } from '@mui/material';
 import { TextFieldStyle } from '../../constants/Constants';
 import { userLogin } from '../../actions/userAuthAction';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../../App';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate()
-  const {userData, setUserData} = useContext(UserContext)
 
   const handleSubmit = async () => {
     const data = {
@@ -17,11 +15,8 @@ const LoginPage = () => {
       password
     }
     const loginHandle = await userLogin(data)
-    console.log(loginHandle);
     if (loginHandle.success){
       localStorage.setItem("userCred", loginHandle.login.username)
-      setUserData(loginHandle.data)
-      console.log(userData);
       navigate("/")
     }
   };

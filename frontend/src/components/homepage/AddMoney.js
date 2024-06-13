@@ -1,4 +1,4 @@
-import { Box, Button, Grid, TextField, Typography, Paper } from "@mui/material";
+import { Button, Grid, TextField, Typography, Paper } from "@mui/material";
 import { AddMoneyToUserAccount } from "../../actions/money_action";
 import { useContext, useState } from "react";
 import { TextFieldStyle } from "../../constants/Constants";
@@ -11,6 +11,7 @@ const AddMoney = () => {
   const { userData, setUserData } = useContext(UserContext)
   
   const handleSubmit = async () => {
+    if(amountAdd && descriptionAdd){
     const data = {
       username: userData.username,
       amount: amountAdd,
@@ -19,9 +20,14 @@ const AddMoney = () => {
     };
     const response = await AddMoneyToUserAccount(data);
     console.log(response);
-    setUserData(response)
+    const state = {
+      username: userData.username,
+      balanceAmount: response.balanceAmount
+    }
+    setUserData(state)
     setAmountAdd("");
     setDescriptionAdd("");
+  }
   };
 
   return (

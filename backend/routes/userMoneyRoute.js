@@ -3,13 +3,16 @@ const userModel = require("../models/userModel");
 const router = express.Router();
 
 router.get("/balance/:username", async (req, res) => {
-  const fetchUserData = await userModel.findOne({
-    username: req.params.username
-  });
+  const fetchUserData = await userModel.findOne(
+    {
+      username: req.params.username,
+    },
+    { balanceAmount: 1 }
+  );
   res.json(fetchUserData);
 });
 
-router.post("/addMoney", async (req, res) => {
+router.post("/add-money", async (req, res) => {
   const addMoney = await userModel.findOneAndUpdate(
     { username: req.body.username },
     {
@@ -18,16 +21,20 @@ router.post("/addMoney", async (req, res) => {
         transactionHistory: {
           amount: req.body.amount,
           description: req.body.description,
-          transactionType: req.body.transactionType
+          transactionType: "Debit",
         },
       },
     },
     { new: true, upsert: true }
   );
-  res.json(addMoney);
+  res.json({
+    balanceAmount: addMoney.balanceAmount,
+    transaction:
+      addMoney.transactionHistory[addMoney.transactionHistory.length - 1],
+  });
 });
 
-router.post("/transferMoney", async (req, res) => {
+router.post("/transfer-money", async (req, res) => {
   const transaction = await userModel.findOneAndUpdate(
     { username: req.body.username },
     {
@@ -36,19 +43,26 @@ router.post("/transferMoney", async (req, res) => {
         transactionHistory: {
           amount: req.body.amount,
           description: req.body.description,
-          transactionType: req.body.transactionType
+          transactionType: "Credit"
         },
       },
     },
     { new: true }
   );
   console.log(transaction);
-  res.json(transaction);
+  res.json({
+    balanceAmount: transaction.balanceAmount,
+    transaction:
+      transaction.transactionHistory[transaction.transactionHistory.length - 1],
+  });
 });
 
 router.get("/transaction-history/:username", async (req, res) => {
-  const transactions = await userModel.findOne({username: req.params.username})
-  res.json(transactions)
-})
+  const transactions = await userModel.findOne(
+    { username: req.params.username },
+    { transactionHistory: 1 }
+  );
+  res.json(transactions);
+});
 
 module.exports = router;

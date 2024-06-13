@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material";
+import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
 import { useContext, useState } from "react";
 import { TransferMoneyFromAccount } from "../../actions/money_action";
 import { TextFieldStyle } from "../../constants/Constants";
@@ -10,18 +10,23 @@ const TransferMoney = () => {
   const [descriptionTransfer, setDescriptionTransfer] = useState("")
   const { userData, setUserData } = useContext(UserContext)
 
-
   const handleSubmit = async () => {
+    if(amountTransfer && descriptionTransfer){
     const data = {
       username: userData.username,
       amount: parseInt(amountTransfer) * -1,
       description: descriptionTransfer,
       transactionType: "Credit"
     }
-    const transfer = await TransferMoneyFromAccount(data)
-    setUserData(transfer)
+    const response = await TransferMoneyFromAccount(data)
+    const state = {
+      username: userData.username,
+      balanceAmount: response.balanceAmount
+    }
+    setUserData(state)
     setAmountTransfer("")
     setDescriptionTransfer("")
+  }
   }
 
   return (
