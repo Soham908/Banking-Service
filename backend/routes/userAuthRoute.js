@@ -23,7 +23,7 @@ router.post("/login", async (req, res) => {
     res.json({ login, success: true });
   } else {
     console.log("wrong password");
-    res.json({ success: false, message: "user does not exist or password wrong" })
+    res.json({ success: false, message: "User does not exist or Wrong password" })
   }
 });
 

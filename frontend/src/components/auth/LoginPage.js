@@ -10,11 +10,14 @@ import {
 import { TextFieldStyle } from "../../constants/Constants";
 import { userLogin } from "../../actions/userAuthAction";
 import { useNavigate } from "react-router-dom";
+import SlideSnackbar from "../SlideSnackbar";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("Login Failed !");
 
   const handleSubmit = async () => {
     if (username && password) {
@@ -26,12 +29,22 @@ const LoginPage = () => {
       if (loginHandle.success) {
         localStorage.setItem("userCred", loginHandle.login.username);
         navigate("/");
+      } else {
+        setSnackbarOpen(true);
+        setSnackbarMessage(loginHandle.message);
       }
+    } else {
+      setSnackbarOpen(true);
+      setSnackbarMessage("Please fill all fields");
     }
   };
 
   const handleRedirect = () => {
     navigate("/page-register");
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
   };
 
   return (
@@ -91,6 +104,13 @@ const LoginPage = () => {
           Dont have an account ? <Link onClick={handleRedirect}>Register</Link>
         </Typography>
       </Box>
+
+      <SlideSnackbar
+        open={snackbarOpen}
+        message={snackbarMessage}
+        handleClose={handleCloseSnackbar}
+        autoHideDuration={2500}
+      />
     </Container>
   );
 };

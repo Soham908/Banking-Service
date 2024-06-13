@@ -10,11 +10,16 @@ import {
 import { TextFieldStyle } from "../../constants/Constants";
 import { userRegister } from "../../actions/userAuthAction";
 import { useNavigate } from "react-router-dom";
+import SlideSnackbar from "../SlideSnackbar";
 
 const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState(
+    "Please fill all fields !"
+  );
 
   const handleSubmit = async () => {
     if (username && password) {
@@ -27,11 +32,17 @@ const RegisterPage = () => {
         localStorage.setItem("userCred", registerHandle.register.username);
         navigate("/");
       }
+    } else {
+      setSnackbarOpen(true)
     }
   };
 
   const handleRedirect = () => {
     navigate("/login");
+  };
+
+  const handleCloseSnackbar = (event, reason) => {
+    setSnackbarOpen(false);
   };
 
   return (
@@ -91,6 +102,12 @@ const RegisterPage = () => {
           Already have an account ? <Link onClick={handleRedirect}>Login</Link>
         </Typography>
       </Box>
+
+      <SlideSnackbar
+        open={snackbarOpen}
+        message={snackbarMessage}
+        handleClose={handleCloseSnackbar}
+      />
     </Container>
   );
 };

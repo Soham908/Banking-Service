@@ -3,31 +3,46 @@ import { useContext, useState } from "react";
 import { TransferMoneyFromAccount } from "../../actions/money_action";
 import { TextFieldStyle } from "../../constants/Constants";
 import { UserContext } from "../../App";
+import SlideSnackbar from "../SlideSnackbar";
 
 const TransferMoney = () => {
-
-  const [amountTransfer, setAmountTransfer] = useState("")
-  const [descriptionTransfer, setDescriptionTransfer] = useState("")
-  const { userData, setUserData } = useContext(UserContext)
+  const [amountTransfer, setAmountTransfer] = useState("");
+  const [descriptionTransfer, setDescriptionTransfer] = useState("");
+  const { userData, setUserData } = useContext(UserContext);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState(
+    "Money transferred successfully !"
+  );
 
   const handleSubmit = async () => {
-    if(amountTransfer && descriptionTransfer){
-    const data = {
-      username: userData.username,
-      amount: parseInt(amountTransfer) * -1,
-      description: descriptionTransfer,
-      transactionType: "Credit"
+    if (userData.username) {
+      if (amountTransfer && descriptionTransfer) {
+        const data = {
+          username: userData.username,
+          amount: parseInt(amountTransfer) * -1,
+          description: descriptionTransfer,
+        };
+        const response = await TransferMoneyFromAccount(data);
+        const state = {
+          username: userData.username,
+          balanceAmount: response.balanceAmount,
+        };
+        setUserData(state);
+        setAmountTransfer("");
+        setDescriptionTransfer("");
+        setSnackbarOpen(true);
+      }
+    } else {
+      setSnackbarMessage("Please Login to use this");
+      setSnackbarOpen(true);
+      setAmountTransfer("");
+      setDescriptionTransfer("");
     }
-    const response = await TransferMoneyFromAccount(data)
-    const state = {
-      username: userData.username,
-      balanceAmount: response.balanceAmount
-    }
-    setUserData(state)
-    setAmountTransfer("")
-    setDescriptionTransfer("")
-  }
-  }
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
+  };
 
   return (
     <Grid item xs={6} sx={{ height: "100%" }}>
@@ -46,10 +61,7 @@ const TransferMoney = () => {
           borderColor: "#847E6A",
         }}
       >
-        <Typography
-          variant="h6" 
-          sx={{ marginBottom: 2 }}
-        >
+        <Typography variant="h6" sx={{ marginBottom: 2 }}>
           Transfer Money
         </Typography>
         <TextField
@@ -58,13 +70,15 @@ const TransferMoney = () => {
             width: "100%",
             borderRadius: 20,
             ...TextFieldStyle,
-          }} 
+          }}
           id="amount"
           label="Amount"
           type="number"
           variant="outlined"
           value={amountTransfer}
-          onChange={(event) => {setAmountTransfer(event.target.value)}}
+          onChange={(event) => {
+            setAmountTransfer(event.target.value);
+          }}
         />
 
         <TextField
@@ -73,13 +87,15 @@ const TransferMoney = () => {
             width: "100%",
             borderRadius: 20,
             ...TextFieldStyle,
-          }} 
+          }}
           id="description"
           label="Recipient"
           variant="outlined"
           color="secondary"
           value={descriptionTransfer}
-          onChange={(event) => {setDescriptionTransfer(event.target.value)}}
+          onChange={(event) => {
+            setDescriptionTransfer(event.target.value);
+          }}
         />
 
         <Button
@@ -90,6 +106,12 @@ const TransferMoney = () => {
           Transfer Money
         </Button>
       </Paper>
+
+      <SlideSnackbar
+        open={snackbarOpen}
+        message={snackbarMessage}
+        handleClose={handleCloseSnackbar}
+      />
     </Grid>
   );
 };

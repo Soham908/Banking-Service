@@ -21,9 +21,7 @@ const AddMoney = () => {
           username: userData.username,
           amount: amountAdd,
           description: descriptionAdd,
-          transactionType: "Debit",
         };
-        console.log(userData);
         const response = await AddMoneyToUserAccount(data);
         const state = {
           username: userData.username,
@@ -35,12 +33,14 @@ const AddMoney = () => {
         setSnackbarOpen(true);
       }
     } else {
-      setSnackbarMessage("Please Login to use this")
+      setSnackbarMessage("Please Login to use this");
       setSnackbarOpen(true);
+      setAmountAdd("");
+      setDescriptionAdd("");
     }
   };
 
-  const handleCloseSnackbar = (event, reason) => {
+  const handleCloseSnackbar = () => {
     setSnackbarOpen(false);
   };
 
