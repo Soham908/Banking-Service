@@ -25,7 +25,7 @@ router.post("/add-money", async (req, res) => {
         },
       },
     },
-    { new: true, upsert: true }
+    { new: true }
   );
   res.json({
     balanceAmount: addMoney.balanceAmount,

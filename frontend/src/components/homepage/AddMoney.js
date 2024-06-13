@@ -3,31 +3,45 @@ import { AddMoneyToUserAccount } from "../../actions/money_action";
 import { useContext, useState } from "react";
 import { TextFieldStyle } from "../../constants/Constants";
 import { UserContext } from "../../App";
+import SlideSnackbar from "../SlideSnackbar";
 
 const AddMoney = () => {
-
   const [amountAdd, setAmountAdd] = useState("");
   const [descriptionAdd, setDescriptionAdd] = useState("");
-  const { userData, setUserData } = useContext(UserContext)
-  
+  const { userData, setUserData } = useContext(UserContext);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState(
+    "Money added successfully !"
+  );
+
   const handleSubmit = async () => {
-    if(amountAdd && descriptionAdd){
-    const data = {
-      username: userData.username,
-      amount: amountAdd,
-      description: descriptionAdd,
-      transactionType: "Debit"
-    };
-    const response = await AddMoneyToUserAccount(data);
-    console.log(response);
-    const state = {
-      username: userData.username,
-      balanceAmount: response.balanceAmount
+    if (userData.username) {
+      if (amountAdd && descriptionAdd) {
+        const data = {
+          username: userData.username,
+          amount: amountAdd,
+          description: descriptionAdd,
+          transactionType: "Debit",
+        };
+        console.log(userData);
+        const response = await AddMoneyToUserAccount(data);
+        const state = {
+          username: userData.username,
+          balanceAmount: response.balanceAmount,
+        };
+        setUserData(state);
+        setAmountAdd("");
+        setDescriptionAdd("");
+        setSnackbarOpen(true);
+      }
+    } else {
+      setSnackbarMessage("Please Login to use this")
+      setSnackbarOpen(true);
     }
-    setUserData(state)
-    setAmountAdd("");
-    setDescriptionAdd("");
-  }
+  };
+
+  const handleCloseSnackbar = (event, reason) => {
+    setSnackbarOpen(false);
   };
 
   return (
@@ -92,6 +106,12 @@ const AddMoney = () => {
           Add Money
         </Button>
       </Paper>
+
+      <SlideSnackbar
+        open={snackbarOpen}
+        message={snackbarMessage}
+        handleClose={handleCloseSnackbar}
+      />
     </Grid>
   );
 };

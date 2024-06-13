@@ -20,6 +20,7 @@ const TransactionHistory = () => {
   const username = localStorage.getItem("userCred");
   const port = process.env.REACT_APP_BACKEND_PORT_URL
   useEffect(() => {
+    if(userData.username){
     const fetchTransactions = async () => {
       try {
         const response = await axios.get(
@@ -35,6 +36,7 @@ const TransactionHistory = () => {
     };
 
     fetchTransactions();
+  }
   }, [userData]);
 
     if (!username) {

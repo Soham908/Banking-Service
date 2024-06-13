@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import HomePage from "./components/homepage/HomePage";
 import DrawerCustom from "./components/DrawerCustom";
@@ -13,6 +13,13 @@ export const UserContext = createContext();
 const App = () => {
   
   const [userData, setUserData] = useState();
+  const username = localStorage.getItem('userCred')
+
+  useEffect(() => {
+    if(!username){
+      setUserData("")
+    }
+  }, [])
 
   return (
     <UserContext.Provider value={{ userData, setUserData }}>

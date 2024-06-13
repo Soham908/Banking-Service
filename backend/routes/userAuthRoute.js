@@ -19,11 +19,11 @@ router.post("/register-new", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   const login = await userModel.findOne({ username: req.body.username });
-  if (login.password === req.body.password) {
+  if (login && login.password === req.body.password) {
     res.json({ login, success: true });
   } else {
     console.log("wrong password");
-    res.json({ success: false })
+    res.json({ success: false, message: "user does not exist or password wrong" })
   }
 });
 

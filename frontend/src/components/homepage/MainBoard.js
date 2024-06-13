@@ -15,7 +15,7 @@ const MainBoard = () => {
       const response = await axios.get(url);
       const data = {
         username: userName,
-        balanceAmount: response.data.balanceAmount
+        balanceAmount: response.data?.balanceAmount
       }
       setUserData(data);
     };
