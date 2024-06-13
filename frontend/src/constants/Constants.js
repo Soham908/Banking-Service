@@ -1,4 +1,3 @@
-export const BACKEND_PORT_URL = "http://localhost:7000"
 export const TextFieldStyle = {
     "& .MuiOutlinedInput-root": {
       "& fieldset": {

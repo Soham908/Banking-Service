@@ -1,18 +1,18 @@
 import React, { useContext, useEffect } from "react";
 import { Grid, Typography, Paper } from "@mui/material";
 import { UserContext } from "../../App";
-import { BACKEND_PORT_URL } from "../../constants/Constants";
 import axios from "axios";
 
 const MainBoard = () => {
 
   const userName = localStorage.getItem('userCred')
   const { userData, setUserData } = useContext(UserContext);
-
+  const port = process.env.REACT_APP_BACKEND_PORT_URL
+  
   useEffect(() => {
     const userDataFetch = async () => {
       console.log(userName, userData?.username);
-      const url = BACKEND_PORT_URL + "/userMoney/balance/" + userName || userData.username;
+      const url = port + "/userMoney/balance/" + userName || userData.username;
       const response = await axios.get(url);
       console.log(response.data);
       setUserData(response.data);

@@ -12,18 +12,18 @@ import {
   Grid,
 } from "@mui/material";
 import axios from "axios";
-import { BACKEND_PORT_URL } from "../constants/Constants";
 import { UserContext } from "../App";
 
 const TransactionHistory = () => {
   const [transactions, setTransactions] = useState([]);
   const { userData } = useContext(UserContext);
   const username = localStorage.getItem("userCred");
+  const port = process.env.REACT_APP_BACKEND_PORT_URL
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
         const response = await axios.get(
-          `${BACKEND_PORT_URL}/userMoney/transaction-history/${
+          `${port}/userMoney/transaction-history/${
             username
           }`
         );
