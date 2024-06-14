@@ -21,7 +21,7 @@ The main goal of this web app is to provide a banking API service to users who w
 - [Usage](#usage)
 
 ## Features
-- User Authentication (Sign Up, Login)
+- User Authentication (Login, Register)
 - Add Money to Account
 - Transfer Money Between Accounts
 - View Transaction History
@@ -29,7 +29,11 @@ The main goal of this web app is to provide a banking API service to users who w
 
 
 ## Screenshots
+![Screenshot 2024-06-14 224220](https://github.com/Soham908/Banking-Service/assets/111056496/eb547cc7-f42f-41f8-b0b1-06349493620a)
 
+![Screenshot 2024-06-14 224925](https://github.com/Soham908/Banking-Service/assets/111056496/c9e7b6c9-0c96-4efa-9e81-595067cea7af)
+
+![Screenshot 2024-06-14 224938](https://github.com/Soham908/Banking-Service/assets/111056496/67ca97b7-1c4b-441a-81ac-9eb49a24a8e6)
 
 ## Getting started
 
