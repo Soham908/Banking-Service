@@ -1,6 +1,7 @@
 # Banking Service - dummy bank application
-The main goal of this web app is to provide a banking API service to users who want to integrate a dummy bank into their finance applications. Initially, this project was going to be only a backend service providing APIs, but then I decided to build the frontend too. 
-
+The main goal of this web app is to provide a banking API service to users who want to integrate a dummy bank into their finance applications. Initially, this project was going to be only a backend service providing APIs, but then I decided to build the frontend too. <br/>
+[Frontend Link](https://banking-service.vercel.app/) 
+[Backend Link](https://banking-service-api.vercel.app/) 
 
 
 ## Technologies Used
@@ -18,7 +19,7 @@ The main goal of this web app is to provide a banking API service to users who w
 - [Features](#features)
 - [Screenshots](#screenshots)
 - [Getting Started](#getting-started)
-- [Usage](#usage)
+- [API Documentation](#api-documentation)
 
 ## Features
 - User Authentication (Login, Register)
