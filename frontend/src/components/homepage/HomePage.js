@@ -9,16 +9,25 @@ const HomePage = () => {
   return (
     <Grid container spacing={2} sx={{ height: "100%" }}>
 
-      <MainBoard />
+      <Grid container item xs={12} spacing={2}>
 
-      <Grid item xs={12} sx={{ height: "50%" }}>
-        <Grid container spacing={2} sx={{ height: "100%" }}>
+        <Grid item xs={12} sx={{ height: "50vh" }}>
+          <MainBoard />
+        </Grid>
 
+      </Grid>
+
+      <Grid container spacing={2} item xs={12}>
+        
+        <Grid item xs={12} sm={6} md={6} sx={{ height: '45vh' }}>
           <AddMoney />
+        </Grid>
+
+        <Grid item xs={12} sm={6} md={6} sx={{ height: '45vh' }}>
           <TransferMoney />
+        </Grid>
 
         </Grid>
-      </Grid>
     </Grid>
   );
 };

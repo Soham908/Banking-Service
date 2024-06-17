@@ -23,7 +23,6 @@ const MainBoard = () => {
   }, []);
 
   return (
-    <Grid item xs={12} sx={{ height: "50%" }}>
       <Paper
         elevation={3}
         sx={{
@@ -50,7 +49,6 @@ const MainBoard = () => {
           Rs. {userData?.balanceAmount}
         </Typography>
       </Paper>
-    </Grid>
   );
 };
 

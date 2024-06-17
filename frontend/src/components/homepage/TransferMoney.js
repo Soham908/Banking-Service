@@ -53,7 +53,7 @@ const TransferMoney = () => {
   };
 
   return (
-    <Grid item xs={6} sx={{ height: "100%" }}>
+    <>
       <Paper
         elevation={3}
         sx={{
@@ -125,7 +125,7 @@ const TransferMoney = () => {
         message={snackbarMessage}
         handleClose={handleCloseSnackbar}
       />
-    </Grid>
+      </>
   );
 };
 
