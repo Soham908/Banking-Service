@@ -13,8 +13,14 @@ const TransferMoney = () => {
   const [snackbarMessage, setSnackbarMessage] = useState(
     "Money transferred successfully !"
   );
+  const [disableButton, setDisableButton] = useState(false)
 
   const handleSubmit = async () => {
+    if(amountTransfer < 0){
+      setSnackbarOpen(true)
+      setSnackbarMessage("enter number greater than 0")
+    }else{
+    setDisableButton(true)
     if (userData.username) {
       if (amountTransfer && descriptionTransfer) {
         const data = {
@@ -38,6 +44,8 @@ const TransferMoney = () => {
       setAmountTransfer("");
       setDescriptionTransfer("");
     }
+    setDisableButton(false)
+  }
   };
 
   const handleCloseSnackbar = () => {
@@ -79,6 +87,10 @@ const TransferMoney = () => {
           onChange={(event) => {
             setAmountTransfer(event.target.value);
           }}
+          error={ amountTransfer < 0 }
+          helperText={ amountTransfer < 0 && "Amount should be greater than 0"}
+          inputProps={{ min: 0 }}
+          required
         />
 
         <TextField
@@ -102,6 +114,7 @@ const TransferMoney = () => {
           variant="contained"
           sx={{ alignSelf: "flex-start", marginTop: 2 }}
           onClick={handleSubmit}
+          disabled={disableButton}
         >
           Transfer Money
         </Button>

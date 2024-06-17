@@ -13,8 +13,14 @@ const AddMoney = () => {
   const [snackbarMessage, setSnackbarMessage] = useState(
     "Money added successfully !"
   );
+  const [disableButton, setDisableButton] = useState(false)
 
   const handleSubmit = async () => {
+    if(amountAdd < 0){
+      setSnackbarOpen(true)
+      setSnackbarMessage("enter number greater than 0")
+    }else{
+    setDisableButton(true)
     if (userData.username) {
       if (amountAdd && descriptionAdd) {
         const data = {
@@ -38,6 +44,8 @@ const AddMoney = () => {
       setAmountAdd("");
       setDescriptionAdd("");
     }
+    setDisableButton(false)
+  }
   };
 
   const handleCloseSnackbar = () => {
@@ -79,6 +87,10 @@ const AddMoney = () => {
           onChange={(event) => {
             setAmountAdd(event.target.value);
           }}
+          error={ amountAdd < 0 }
+          helperText={ amountAdd < 0 && "Amount should be greater than 0"}
+          inputProps={{ min: 0 }}
+          required
         />
 
         <TextField
@@ -102,6 +114,7 @@ const AddMoney = () => {
           variant="contained"
           sx={{ alignSelf: "flex-start", marginTop: 2 }}
           onClick={handleSubmit}
+          disabled={disableButton}
         >
           Add Money
         </Button>
