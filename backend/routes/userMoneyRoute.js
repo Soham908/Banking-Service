@@ -35,13 +35,14 @@ router.post("/add-money", async (req, res) => {
 });
 
 router.post("/transfer-money", async (req, res) => {
+  const amt = parseFloat(req.body.amount) * -1 
   const transaction = await userModel.findOneAndUpdate(
     { username: req.body.username },
     {
-      $inc: { balanceAmount: req.body.amount },
+      $inc: { balanceAmount: amt },
       $push: {
         transactionHistory: {
-          amount: req.body.amount,
+          amount: amt,
           description: req.body.description,
           transactionType: "Credit"
         },
