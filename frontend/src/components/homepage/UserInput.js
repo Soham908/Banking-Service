@@ -22,10 +22,17 @@ const UserInput = ({ snackMessage, TransactionFunc, title, label }) => {
   
   
     const handleSubmit = async () => {
-      if(error){
+      if(title === "Transfer Money" && userData.balanceAmount - amount < 0){
+        console.log("balace will go in negative");
+        setSnackbarMessage("Balance cannot be negative")
+        setSnackbarOpen(true)
+        return
+      }
+      else if(error){
         setSnackbarOpen(true)
         setSnackbarMessage(helperText)
-      }else{
+        return
+      }
       setDisableButton(true)
       if (userData.username) {
         if (amount && description) {
@@ -35,9 +42,7 @@ const UserInput = ({ snackMessage, TransactionFunc, title, label }) => {
             description: description,
           };
   
-          const response = await TransactionFunc(data);
-  
-  
+          const response = await TransactionFunc(data);  
           const state = {
             username: userData.username,
             balanceAmount: response.balanceAmount,
@@ -55,7 +60,6 @@ const UserInput = ({ snackMessage, TransactionFunc, title, label }) => {
         setDescription("");
       }
       setDisableButton(false)
-    }
     };
   
     const handleCloseSnackbar = () => {
