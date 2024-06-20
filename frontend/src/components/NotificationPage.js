@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Container,
   Typography,
@@ -14,9 +14,12 @@ import {
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { getNotificationsAction, reserveFundNotificationResponse } from '../actions/notificationAction';
+import { UserContext } from '../App';
 
 const NotificationPage = () => {
   const [notifications, setNotifications] = useState([]);
+  const { userData } = useContext(UserContext)
+  const username = localStorage.getItem('userCred')
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -26,11 +29,16 @@ const NotificationPage = () => {
     fetchNotifications();
   }, []);
 
-  const handleNotificationAction = async ({ goalName, bankStatus, index }) => {
+  const handleNotificationAction = async ({ goalName, bankStatus, index, reserveAmount }) => {
+    if(userData.balanceAmount - userData.reservedFunds - parseFloat(reserveAmount) < 1000){
+      console.log("cannot be below 1000");
+      return
+    }
     const data = {
-      username: 'Soham',
+      username,
       goalName: goalName,
-      bankStatus
+      bankStatus,
+      reserveAmount
     }
     reserveFundNotificationResponse(data)
 
@@ -68,7 +76,7 @@ const NotificationPage = () => {
                 {
                   notification.notificationStatus === 'pending' ?
                 <TableCell>
-                  <IconButton color="primary" onClick={() => handleNotificationAction({goalName: notification.notificationContent, bankStatus: "verified", index}) }>
+                  <IconButton color="primary" onClick={() => handleNotificationAction({goalName: notification.notificationContent, bankStatus: "verified", index, reserveAmount: notification.notificationAmount}) }>
                     <CheckIcon />
                   </IconButton>
                   <IconButton color="secondary" onClick={() => handleNotificationAction({goalName: notification.notificationContent, bankStatus: "rejected", index}) }>

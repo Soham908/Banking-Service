@@ -18,6 +18,7 @@ import LoginIcon from "@mui/icons-material/Login"
 import MenuIcon from "@mui/icons-material/Menu"
 import { useNavigate } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import { UserContext } from "../App";
 
 const DrawerCustom = () => {
@@ -67,6 +68,7 @@ const DrawerCustom = () => {
         {[
           { text: "HomePage", icon: <HomeIcon />, onClick: () => {navigate("/"); toggleDrawer()} },
           { text: "Transaction History", icon: <AccountBalanceWalletIcon />, onClick: () => {navigate("/transactions"); toggleDrawer()} },
+          { text: "Notifications", icon: <NotificationsIcon />, onClick: () => {navigate("/notifications"); toggleDrawer()} },
           { text: "Login", icon: <LoginIcon />, onClick: () => {navigate("/login"); toggleDrawer()}}
         ].map((item, index) => (
           <ListItemButton

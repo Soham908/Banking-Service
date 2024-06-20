@@ -3,7 +3,6 @@ const url = process.env.REACT_APP_BACKEND_PORT_URL;
 
 export const getNotificationsAction = async (username) => {
   try {
-    console.log(url);
     const notification = await axios.get(
       url + `/notification/get-notification/${username}`
     );

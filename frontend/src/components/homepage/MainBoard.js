@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Grid, Typography, Paper } from "@mui/material";
 import { UserContext } from "../../App";
-import axios from "axios";
+import { checkAccountBalance } from "../../actions/money_action";
 
 const MainBoard = () => {
 
@@ -11,11 +11,12 @@ const MainBoard = () => {
   
   useEffect(() => {
     const userDataFetch = async () => {
-      const url = port + "/userMoney/balance/" + userName;
-      const response = await axios.get(url);
+      const response = await checkAccountBalance(userName)
+      console.log(response);
       const data = {
         username: userName,
-        balanceAmount: response.data?.balanceAmount
+        balanceAmount: response?.balanceAmount,
+        reservedFunds: response?.reservedFunds
       }
       setUserData(data);
     };

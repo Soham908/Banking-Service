@@ -7,7 +7,7 @@ router.get("/balance/:username", async (req, res) => {
     {
       username: req.params.username,
     },
-    { balanceAmount: 1 }
+    { balanceAmount: 1, reservedFunds: 1 }
   );
   res.json(fetchUserData);
 });
@@ -31,6 +31,7 @@ router.post("/add-money", async (req, res) => {
     balanceAmount: addMoney.balanceAmount,
     transaction:
       addMoney.transactionHistory[addMoney.transactionHistory.length - 1],
+    reservedFunds: addMoney.reservedFunds
   });
 });
 
@@ -55,6 +56,7 @@ router.post("/transfer-money", async (req, res) => {
     balanceAmount: transaction.balanceAmount,
     transaction:
       transaction.transactionHistory[transaction.transactionHistory.length - 1],
+    reservedFunds: addMoney.reservedFunds
   });
 });
 

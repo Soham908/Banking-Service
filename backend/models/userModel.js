@@ -41,6 +41,7 @@ const userSchema = new mongoose.Schema(
     balanceAmount: {
       type: Number,
     },
+    reservedFunds: { type: Number },
     transactionHistory: [transaction],
     notificationList: [notification]
   },

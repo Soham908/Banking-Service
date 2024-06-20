@@ -46,6 +46,7 @@ const UserInput = ({ snackMessage, TransactionFunc, title, label }) => {
           const state = {
             username: userData.username,
             balanceAmount: response.balanceAmount,
+            reservedFunds: response.reservedFunds
           };
           setUserData(state);
           setamount("");
