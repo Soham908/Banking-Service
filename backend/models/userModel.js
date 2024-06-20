@@ -1,5 +1,16 @@
 const { default: mongoose } = require("mongoose");
 
+const notification = new mongoose.Schema(
+  {
+    notificationContent: { type: String, required: true },
+    notificationAmount: { type: String, required: true },
+    notficationStatus: { type: String },
+    notificationContentFromApp: { type: String },
+    notificationType: { type: String}
+  },
+  { timestamps: true }
+);
+
 const transaction = new mongoose.Schema(
   {
     amount: {
@@ -11,8 +22,8 @@ const transaction = new mongoose.Schema(
       required: true,
     },
     transactionType: {
-        type: String
-    }
+      type: String,
+    },
   },
   { timestamps: true }
 );
@@ -30,7 +41,8 @@ const userSchema = new mongoose.Schema(
     balanceAmount: {
       type: Number,
     },
-    transactionHistory: [transaction]
+    transactionHistory: [transaction],
+    notificationList: [notification]
   },
   {
     collection: "userData",
