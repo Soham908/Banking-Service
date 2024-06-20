@@ -10,7 +10,16 @@ exports.reserveFundsResponse = async (req, res) => {
             goalName: req.body.goalName,
             bankStatus: req.body.bankStatus
         }
+        // sending request to fin goal backend to update the status
         const response = await axios.post(url, data)
+        // update the status in the bank notification database
+        const updateNotification = await userModel.findOne({username: data.username})
+        const notification = updateNotification.notificationList.find(noti => noti.notificationContent === data.goalName)
+        console.log(notification.notificationContent);
+        notification.notificationStatus = data.bankStatus
+        
+        updateNotification.save()
+        
         res.json({
             success: true
         })

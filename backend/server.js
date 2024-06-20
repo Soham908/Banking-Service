@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const userAuth = require("./routes/userAuthRoute");
 const userMoney = require("./routes/userMoneyRoute");
 const goalAppIntegrationRoute = require("./routes/goalAppIntegrationRoute");
+const notificationRoute = require('./routes/notificationRoute')
 require("dotenv").config();
 const cors = require("cors");
 
@@ -25,6 +26,8 @@ app.use(cors());
 app.use("/userAuth", userAuth);
 app.use("/userMoney", userMoney);
 app.use("/integration", goalAppIntegrationRoute);
+app.use("/notification", notificationRoute)
+
 app.get("/", (req, res) => {
   res.json({
     message: "You have reached the banking service api endpoint url, if you want to access the frontend use this link https://banking-service.vercel.app/",

@@ -4,7 +4,7 @@ const notification = new mongoose.Schema(
   {
     notificationContent: { type: String, required: true },
     notificationAmount: { type: String, required: true },
-    notficationStatus: { type: String },
+    notificationStatus: { type: String },
     notificationContentFromApp: { type: String },
     notificationType: { type: String}
   },

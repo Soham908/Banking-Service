@@ -7,6 +7,7 @@ import LoginPage from "./components/auth/LoginPage";
 import RegisterPage from "./components/auth/RegisterPage";
 import TransactionHistory from "./components/TransactionHistory";
 import ProfilePage from "./components/ProfilePage";
+import NotificationPage from "./components/NotificationPage";
 
 export const UserContext = createContext();
 
@@ -36,6 +37,7 @@ const App = () => {
             <Route path="/page-register" element={<RegisterPage />} />
             <Route path="/transactions" element={<TransactionHistory />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/notifications" element={<NotificationPage />} />
           </Routes>
         </Box>
       </Box>
