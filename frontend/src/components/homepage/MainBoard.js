@@ -1,27 +1,11 @@
-import React, { useContext, useEffect } from "react";
-import { Grid, Typography, Paper } from "@mui/material";
+import React, { useContext } from "react";
+import { Typography, Paper } from "@mui/material";
 import { UserContext } from "../../App";
-import { checkAccountBalance } from "../../actions/money_action";
 
 const MainBoard = () => {
 
   const userName = localStorage.getItem('userCred')
-  const { userData, setUserData } = useContext(UserContext);
-  const port = process.env.REACT_APP_BACKEND_PORT_URL
-  
-  useEffect(() => {
-    const userDataFetch = async () => {
-      const response = await checkAccountBalance(userName)
-      console.log(response);
-      const data = {
-        username: userName,
-        balanceAmount: response?.balanceAmount,
-        reservedFunds: response?.reservedFunds
-      }
-      setUserData(data);
-    };
-    userDataFetch();
-  }, []);
+  const { userData } = useContext(UserContext);
 
   return (
       <Paper

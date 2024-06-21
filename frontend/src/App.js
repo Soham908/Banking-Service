@@ -8,6 +8,7 @@ import RegisterPage from "./components/auth/RegisterPage";
 import TransactionHistory from "./components/TransactionHistory";
 import ProfilePage from "./components/ProfilePage";
 import NotificationPage from "./components/NotificationPage";
+import { checkAccountBalance } from "./actions/money_action";
 
 export const UserContext = createContext();
 
@@ -21,6 +22,20 @@ const App = () => {
       setUserData("")
     }
   }, [])
+
+  useEffect(() => {
+    const userDataFetch = async () => {
+      const response = await checkAccountBalance(username)
+      console.log("this has been fetched from the APP component ");
+      const data = {
+        username: username,
+        balanceAmount: response?.balanceAmount,
+        reservedFunds: response?.reservedFunds
+      }
+      setUserData(data);
+    };
+    userDataFetch();
+  }, []);
 
   return (
     <UserContext.Provider value={{ userData, setUserData }}>

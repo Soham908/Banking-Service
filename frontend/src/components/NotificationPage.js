@@ -15,16 +15,19 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { getNotificationsAction, reserveFundNotificationResponse } from '../actions/notificationAction';
 import { UserContext } from '../App';
+import SlideSnackbar from './SlideSnackbar';
 
 const NotificationPage = () => {
   const [notifications, setNotifications] = useState([]);
   const { userData } = useContext(UserContext)
   const username = localStorage.getItem('userCred')
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("Request Accepted")
 
   useEffect(() => {
     const fetchNotifications = async () => {
       const response = await getNotificationsAction("Soham")
-      setNotifications(response.notification.notificationList)
+      setNotifications( response.notification.notificationList.reverse() )
     };
     fetchNotifications();
   }, []);
@@ -32,6 +35,8 @@ const NotificationPage = () => {
   const handleNotificationAction = async ({ goalName, bankStatus, index, reserveAmount }) => {
     if(userData.balanceAmount - userData.reservedFunds - parseFloat(reserveAmount) < 1000){
       console.log("cannot be below 1000");
+      setSnackbarOpen(true)
+      setSnackbarMessage("Reserved amount cannot go above minimum 1000 account balance")
       return
     }
     const data = {
@@ -46,6 +51,10 @@ const NotificationPage = () => {
     updatedNotifications[index].notificationStatus = bankStatus;
     setNotifications(updatedNotifications);
   }
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
+  };
 
   return (
     <Container>
@@ -65,7 +74,6 @@ const NotificationPage = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {console.log(notifications, typeof notifications)}
             {notifications?.map((notification, index) => (
               <TableRow key={index}>
                 <TableCell  sx={{ color: 'white' }} >{notification.notificationContent}</TableCell>
@@ -93,6 +101,12 @@ const NotificationPage = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      <SlideSnackbar
+          open={snackbarOpen}
+          message={snackbarMessage}
+          handleClose={handleCloseSnackbar}
+          autoHideDuration={3000}
+        />
     </Container>
   );
 };

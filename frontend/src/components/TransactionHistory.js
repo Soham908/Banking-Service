@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Table,
@@ -12,15 +12,13 @@ import {
   Grid,
 } from "@mui/material";
 import axios from "axios";
-import { UserContext } from "../App";
 
 const TransactionHistory = () => {
   const [transactions, setTransactions] = useState([]);
-  const { userData } = useContext(UserContext);
   const username = localStorage.getItem("userCred");
   const port = process.env.REACT_APP_BACKEND_PORT_URL
   useEffect(() => {
-    if(userData.username){
+    if(username){
     const fetchTransactions = async () => {
       try {
         const response = await axios.get(
@@ -29,7 +27,6 @@ const TransactionHistory = () => {
           }`
         );
         setTransactions(response.data.transactionHistory.reverse());
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching transactions:", error);
       }
@@ -37,7 +34,7 @@ const TransactionHistory = () => {
 
     fetchTransactions();
   }
-  }, [userData]);
+  }, []);
 
     if (!username) {
       return <Typography variant="h6" color="white"  sx={{ alignContent: 'center', justifyContent:'center' }}>Please login to view your transaction history.</Typography>;

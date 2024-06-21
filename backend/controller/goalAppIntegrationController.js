@@ -15,9 +15,10 @@ exports.reserveFundsResponse = async (req, res) => {
 
         // update the status in the bank notification database
         const updateNotification = await userModel.findOne({username: data.username})
-        const notification = updateNotification.notificationList.find(noti => noti.notificationContent === data.goalName)
+        const notification = updateNotification.notificationList.find(noti => noti.notificationContent === data.goalName && noti.notificationStatus === 'pending')
         notification.notificationStatus = data.bankStatus
-        updateNotification.reservedFunds += parseFloat(req.body.reserveAmount)
+        if(req.body.reserveAmount)
+          updateNotification.reservedFunds += parseFloat(req.body.reserveAmount)
         updateNotification.save()
 
         res.json({
@@ -32,6 +33,7 @@ exports.reserveFundsResponse = async (req, res) => {
 exports.reserveFunds = async (req, res) => {
   try {
     const data = req.body;
+    console.log(data);
     const notification = await userModel.findOneAndUpdate(
       { username: data.username },
       {
