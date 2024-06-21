@@ -26,8 +26,9 @@ const NotificationPage = () => {
 
   useEffect(() => {
     const fetchNotifications = async () => {
-      const response = await getNotificationsAction("Soham")
-      setNotifications( response.notification.notificationList.reverse() )
+      const response = await getNotificationsAction(username)
+      if(response)
+        setNotifications( response?.notification?.notificationList?.reverse() )
     };
     fetchNotifications();
   }, []);
