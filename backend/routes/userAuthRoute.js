@@ -7,6 +7,7 @@ router.post("/register-new", async (req, res) => {
     username: req.body.username,
     password: req.body.password,
     balanceAmount: 10000,
+    reservedFunds: 0,
     transactionHistory: {
       description: "Account created bonus",
       amount: 10000,
