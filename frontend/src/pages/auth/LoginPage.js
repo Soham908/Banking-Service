@@ -8,9 +8,9 @@ import {
   Link,
 } from "@mui/material";
 import { TextFieldStyle } from "../../constants/Constants";
-import { userLogin } from "../../actions/userAuthAction";
 import { useNavigate } from "react-router-dom";
 import SlideSnackbar from "../../components/SlideSnackbar";
+import { userLoginAction } from "../../actions/authAction";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
@@ -25,7 +25,7 @@ const LoginPage = () => {
         username,
         password,
       };
-      const loginHandle = await userLogin(data);
+      const loginHandle = await userLoginAction(data);
       if (loginHandle.success) {
         localStorage.setItem("userCred", loginHandle.login.username);
         navigate("/");

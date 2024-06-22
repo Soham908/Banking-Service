@@ -8,7 +8,7 @@ import RegisterPage from "./pages/auth/RegisterPage";
 import TransactionHistory from "./pages/TransactionHistory";
 import ProfilePage from "./pages/ProfilePage";
 import NotificationPage from "./pages/NotificationPage";
-import { checkAccountBalance } from "./actions/money_action";
+import { checkAccountBalanceAction } from "./actions/moneyAction";
 
 export const UserContext = createContext();
 
@@ -25,7 +25,7 @@ const App = () => {
 
   useEffect(() => {
     const userDataFetch = async () => {
-      const response = await checkAccountBalance(username)
+      const response = await checkAccountBalanceAction(username)
       console.log("this has been fetched from the APP component ");
       const data = {
         username: username,

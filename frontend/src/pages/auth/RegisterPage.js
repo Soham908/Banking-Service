@@ -8,9 +8,9 @@ import {
   Link,
 } from "@mui/material";
 import { TextFieldStyle } from "../../constants/Constants";
-import { userRegister } from "../../actions/userAuthAction";
 import { useNavigate } from "react-router-dom";
 import SlideSnackbar from "../../components/SlideSnackbar";
+import { userRegisterAction } from "../../actions/authAction";
 
 const RegisterPage = () => {
   const [username, setUsername] = useState("");
@@ -27,7 +27,7 @@ const RegisterPage = () => {
         username,
         password,
       };
-      const registerHandle = await userRegister(data);
+      const registerHandle = await userRegisterAction(data);
       if (registerHandle.success) {
         localStorage.setItem("userCred", registerHandle.register.username);
         navigate("/");

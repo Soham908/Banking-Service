@@ -1,4 +1,4 @@
-import { AddMoneyToUserAccount } from "../../actions/money_action";
+import { AddMoneyToUserAccountAction } from "../../actions/moneyAction";
 import UserInput from "./UserInput";
 
 const AddMoney = () => {
@@ -7,7 +7,7 @@ const AddMoney = () => {
       title="Add Money"
       snackMessage="Money Added Successfully"
       label="description"
-      TransactionFunc={AddMoneyToUserAccount}
+      TransactionFunc={AddMoneyToUserAccountAction}
     />
   );
 };

@@ -1,6 +1,5 @@
 import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
 import { useContext, useState } from "react";
-import { TransferMoneyFromAccount } from "../../actions/money_action";
 import { TextFieldStyle } from "../../constants/Constants";
 import { UserContext } from "../../App";
 import SlideSnackbar from "../SlideSnackbar";

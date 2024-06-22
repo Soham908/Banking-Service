@@ -1,4 +1,4 @@
-import { TransferMoneyFromAccount } from "../../actions/money_action";
+import { TransferMoneyFromAccountAction } from "../../actions/moneyAction";
 import UserInput from "./UserInput";
 
 const TransferMoney = () => {
@@ -7,7 +7,7 @@ const TransferMoney = () => {
       title="Transfer Money"
       snackMessage="Money Transfered"
       label="recipient"
-      TransactionFunc={TransferMoneyFromAccount}
+      TransactionFunc={TransferMoneyFromAccountAction}
     />
   );
 };
