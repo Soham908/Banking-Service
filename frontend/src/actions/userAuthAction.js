@@ -1,16 +1,13 @@
-import axios from "axios"
+import axios from "axios";
 
-const port = process.env.REACT_APP_BACKEND_PORT_URL
+const url = process.env.REACT_APP_BACKEND_PORT_URL + "/api/auth";
 
 export const userLogin = async (data) => {
-    const url = port + "/userAuth/login"
-    const login = await axios.post(url, data)
-    return login.data
-}
+  const login = await axios.post(url + "/login", data);
+  return login.data;
+};
 
 export const userRegister = async (data) => {
-    const url = port + "/userAuth/register-new"
-    const register = await axios.post(url, data)
-    return register.data
-}
-
+  const register = await axios.post(url + "register", data);
+  return register.data;
+};

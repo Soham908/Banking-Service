@@ -8,18 +8,16 @@ import {
   Link,
 } from "@mui/material";
 import { TextFieldStyle } from "../../constants/Constants";
-import { userRegister } from "../../actions/userAuthAction";
+import { userLogin } from "../../actions/userAuthAction";
 import { useNavigate } from "react-router-dom";
-import SlideSnackbar from "../SlideSnackbar";
+import SlideSnackbar from "../../components/SlideSnackbar";
 
-const RegisterPage = () => {
+const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState(
-    "Please fill all fields !"
-  );
+  const [snackbarMessage, setSnackbarMessage] = useState("Login Failed !");
 
   const handleSubmit = async () => {
     if (username && password) {
@@ -27,21 +25,25 @@ const RegisterPage = () => {
         username,
         password,
       };
-      const registerHandle = await userRegister(data);
-      if (registerHandle.success) {
-        localStorage.setItem("userCred", registerHandle.register.username);
+      const loginHandle = await userLogin(data);
+      if (loginHandle.success) {
+        localStorage.setItem("userCred", loginHandle.login.username);
         navigate("/");
+      } else {
+        setSnackbarOpen(true);
+        setSnackbarMessage(loginHandle.message);
       }
     } else {
-      setSnackbarOpen(true)
+      setSnackbarOpen(true);
+      setSnackbarMessage("Please fill all fields");
     }
   };
 
   const handleRedirect = () => {
-    navigate("/login");
+    navigate("/page-register");
   };
 
-  const handleCloseSnackbar = (event, reason) => {
+  const handleCloseSnackbar = () => {
     setSnackbarOpen(false);
   };
 
@@ -57,7 +59,7 @@ const RegisterPage = () => {
         }}
       >
         <Typography variant="h4" gutterBottom>
-          Register
+          Login
         </Typography>
         <TextField
           label="Username"
@@ -96,10 +98,10 @@ const RegisterPage = () => {
           sx={{ mt: 2 }}
           onClick={handleSubmit}
         >
-          Register
+          Login
         </Button>
         <Typography variant="h6" sx={{ margin: "5%" }}>
-          Already have an account ? <Link onClick={handleRedirect}>Login</Link>
+          Dont have an account ? <Link onClick={handleRedirect}>Register</Link>
         </Typography>
       </Box>
 
@@ -107,9 +109,10 @@ const RegisterPage = () => {
         open={snackbarOpen}
         message={snackbarMessage}
         handleClose={handleCloseSnackbar}
+        autoHideDuration={2500}
       />
     </Container>
   );
 };
 
-export default RegisterPage;
+export default LoginPage;

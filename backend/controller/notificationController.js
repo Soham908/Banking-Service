@@ -1,5 +1,7 @@
 const userModel = require("../models/userModel");
 
+// the route for this function => /notification/get-notification/:username
+// get method
 exports.getNotification = async (req, res) => {
   try {
     const notification = await userModel.findOne(

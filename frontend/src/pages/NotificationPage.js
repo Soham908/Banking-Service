@@ -15,7 +15,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { getNotificationsAction, reserveFundNotificationResponse } from '../actions/notificationAction';
 import { UserContext } from '../App';
-import SlideSnackbar from './SlideSnackbar';
+import SlideSnackbar from '../components/SlideSnackbar';
 
 const NotificationPage = () => {
   const [notifications, setNotifications] = useState([]);

@@ -2,8 +2,8 @@ const axios = require("axios");
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const userAuth = require("./routes/userAuthRoute");
-const userMoney = require("./routes/userMoneyRoute");
+const userAuth = require("./routes/authRoute");
+const userMoney = require("./routes/moneyRoute");
 const goalAppIntegrationRoute = require("./routes/goalAppIntegrationRoute");
 const notificationRoute = require('./routes/notificationRoute')
 require("dotenv").config();
@@ -23,10 +23,10 @@ mongoose
 app.use(express.json());
 app.use(cors());
 
-app.use("/userAuth", userAuth);
-app.use("/userMoney", userMoney);
+app.use("/api/auth", userAuth);
+app.use("/api/money", userMoney);
+app.use("/api/notification", notificationRoute)
 app.use("/integration", goalAppIntegrationRoute);
-app.use("/notification", notificationRoute)
 
 app.get("/", (req, res) => {
   res.json({

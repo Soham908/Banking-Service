@@ -1,8 +1,8 @@
-import MainBoard from "./MainBoard";
+import MainBoard from "../components/homepage/MainBoard";
 import React from 'react';
 import { Grid } from '@mui/material';
-import AddMoney from './AddMoney';
-import TransferMoney from './TransferMoney';
+import AddMoney from '../components/homepage/AddMoney';
+import TransferMoney from '../components/homepage/TransferMoney';
 
 
 const HomePage = () => {

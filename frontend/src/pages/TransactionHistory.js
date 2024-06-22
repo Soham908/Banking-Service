@@ -22,9 +22,7 @@ const TransactionHistory = () => {
     const fetchTransactions = async () => {
       try {
         const response = await axios.get(
-          `${port}/userMoney/transaction-history/${
-            username
-          }`
+          `${port}/api/money/check-transaction-history/${username}`
         );
         setTransactions(response.data.transactionHistory.reverse());
       } catch (error) {

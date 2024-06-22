@@ -1,13 +1,13 @@
 import React, { createContext, useEffect, useState } from "react";
 import { Box } from "@mui/material";
-import HomePage from "./components/homepage/HomePage";
+import HomePage from "./pages/HomePage"
 import DrawerCustom from "./components/DrawerCustom";
 import { Route, Routes } from "react-router-dom";
-import LoginPage from "./components/auth/LoginPage";
-import RegisterPage from "./components/auth/RegisterPage";
-import TransactionHistory from "./components/TransactionHistory";
-import ProfilePage from "./components/ProfilePage";
-import NotificationPage from "./components/NotificationPage";
+import LoginPage from "./pages/auth/LoginPage";
+import RegisterPage from "./pages/auth/RegisterPage";
+import TransactionHistory from "./pages/TransactionHistory";
+import ProfilePage from "./pages/ProfilePage";
+import NotificationPage from "./pages/NotificationPage";
 import { checkAccountBalance } from "./actions/money_action";
 
 export const UserContext = createContext();
