@@ -33,6 +33,12 @@ const MainBoard = () => {
         <Typography variant="h6" sx={{ fontWeight: "bold" }}>
           Rs. {userData?.balanceAmount}
         </Typography>
+        <Typography variant="h6" sx={{ marginBottom: 1, marginTop: 2}}>
+          Reserved Amount
+        </Typography>
+        <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+          Rs. {userData?.reservedFunds}
+        </Typography>
       </Paper>
   );
 };

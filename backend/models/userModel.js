@@ -3,7 +3,7 @@ const { default: mongoose } = require("mongoose");
 const notification = new mongoose.Schema(
   {
     notificationContent: { type: String, required: true },
-    notificationAmount: { type: String, required: true },
+    notificationAmount: { type: Number, required: true },
     notificationStatus: { type: String },
     notificationContentFromApp: { type: String },
     notificationType: { type: String}

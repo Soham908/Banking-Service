@@ -1,6 +1,6 @@
 const userModel = require("../models/userModel");
-const axios = require('axios')
-require('dotenv')
+const axios = require("axios");
+require("dotenv");
 
 // the route for this function  => /api/integrate-app/finance-goal-app/reserve-funds-request (post)
 // data received { goalName , goalReserveAmount
@@ -27,44 +27,93 @@ exports.reserveFundsRequestControllerFunc = async (req, res) => {
     );
     res.json({
       success: true,
-      message: "request notification created"
-    })
+      message: "request notification created",
+    });
   } catch (error) {
     console.log(error);
     res.json({
-        success: false,
-        message: "error occured",
-        error
-    })
+      success: false,
+      message: "error occured",
+      error,
+    });
   }
 };
 
-// response by the notification that was created, could be accepted or rejected
-// first update the user documnet of bank and then send request to the goal app
+// the route for this function  => /api/integrate-app/finance-goal-app/reserve-funds-response (post)
+// data that is coming in => { username, goalName, bankStatus, reserveAmount? }
 exports.reserveFundsResponseControllerFunc = async (req, res) => {
   try {
-    const financeGoalBackendURL = process.env.FINANCE_GOAL_URL + "/api/bank/reserve-fund-response"
-    const data = req.body
+    const financeGoalBackendURL =
+      process.env.FINANCE_GOAL_URL + "/api/bank/reserve-fund-response";
+    const data = req.body;
     console.log(financeGoalBackendURL);
-    const reserveFundResponse = await userModel.findOne({ username: data.username })
-    const notification = reserveFundResponse.notificationList.find(noti => noti.notificationContent === data.goalName)
+    const reserveFundResponse = await userModel.findOne({
+      username: data.username,
+    });
+    const notification = reserveFundResponse.notificationList.find(
+      (noti) => noti.notificationContent === data.goalName
+    );
     console.log(notification);
-    notification.notificationStatus = data.bankStatus
-  
-    await reserveFundResponse.save()
-  
+    notification.notificationStatus = data.bankStatus;
+    if(data.reserveAmount)
+      reserveFundResponse.reservedFunds += data.reserveAmount
+
+    await reserveFundResponse.save();
+
     // now pass a request to the goal backend
     await axios.post(financeGoalBackendURL, {
       username: data.username,
       goalName: data.goalName,
-      bankStatus: data.bankStatus
-    })
+      bankStatus: data.bankStatus,
+    });
     res.json({
       success: true,
-      message: "response has been sent to finance goal app"
-    })
+      message: "response has been sent to finance goal app",
+    });
   } catch (error) {
     console.log(error);
   }
+};
+// the route for this function  => /api/integrate-app/finance-goal-app/release-funds-request (post)
+// request from goal app, the goal is deleted and funds needs to be released
+// data incoming => { username, goalname }
+exports.releaseFundsRequestControllerFund = async (req, res) => {
+  try {
+    const data = req.body;
+    const releaseFunds = await userModel.findOne({ username: data.username });
 
-}
+    const notification = releaseFunds.notificationList.find(
+      (noti) => noti.notificationContent === data.goalName
+    );
+
+    if (notification.notificationStatus === 'verified') {
+      const releaseAmount = notification.notificationAmount;
+      releaseFunds.reservedFunds -= parseFloat(releaseAmount);
+    }
+    else if (notification.notificationStatus === 'pending'){
+      notification.notificationStatus = "rejected";
+    } else return res.json({ success: false, message: "notification does not exist" });
+    
+
+    releaseFunds.notificationList.push({
+      notificationContent: data.goalName,
+      notificationAmount: notification.notificationAmount,
+      notificationStatus: "deleted",
+      notificationType: "release funds",
+      notificationContentFromApp: notification.notificationContentFromApp,
+    })
+
+    releaseFunds.save()
+    res.json({
+      success: true,
+      message: "Goal status = deleted, and the funds were released",
+    });
+
+  } catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      error,
+    });
+  }
+};
