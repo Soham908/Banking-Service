@@ -1,12 +1,9 @@
-import React, { useContext } from "react";
 import { Typography, Paper } from "@mui/material";
-import { UserContext } from "../../App";
+import { useUserDataStore } from "../../store/store";
 
-const MainBoard = () => {
-
-  const userName = localStorage.getItem('userCred')
-  const { userData } = useContext(UserContext);
-
+const MainBoard = () => {  
+  const { username, balanceAmount, reservedFunds } = useUserDataStore(state => state.userData)
+  
   return (
       <Paper
         elevation={3}
@@ -25,19 +22,19 @@ const MainBoard = () => {
         }}
       >
         <Typography variant="h4" sx={{ marginBottom: 2 }}>
-          Welcome back, {userName || userData?.username}
+          Welcome back, {username}
         </Typography>
         <Typography variant="h6" sx={{ marginBottom: 1 }}>
           Account Balance
         </Typography>
         <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-          Rs. {userData?.balanceAmount}
+          Rs. {balanceAmount}
         </Typography>
         <Typography variant="h6" sx={{ marginBottom: 1, marginTop: 2}}>
           Reserved Amount
         </Typography>
         <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-          Rs. {userData?.reservedFunds}
+          Rs. {reservedFunds}
         </Typography>
       </Paper>
   );

@@ -1,16 +1,18 @@
-import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
-import { useContext, useState } from "react";
-import { TextFieldStyle } from "../../constants/Constants";
-import { UserContext } from "../../App";
+import { Button, Paper, TextField, Typography } from "@mui/material";
+import { useState } from "react";
+import { TextFieldStyleHomePage } from "../../constants/Constants";
 import SlideSnackbar from "../SlideSnackbar";
+import { useUserDataStore } from "../../store/store";
 
 
 const UserInput = ({ snackMessage, TransactionFunc, title, label }) => {
     const [amount, setamount] = useState("");
     const [description, setDescription] = useState("");
-    const { userData, setUserData } = useContext(UserContext);
+
+    const { username, balanceAmount } = useUserDataStore(state => state.userData)
+    const setUserDataToStore = useUserDataStore(state => state.setStoreUserData)
+    
     const [snackbarOpen, setSnackbarOpen] = useState(false);
-  
     const [snackbarMessage, setSnackbarMessage] = useState(
       snackMessage
     );
@@ -21,7 +23,7 @@ const UserInput = ({ snackMessage, TransactionFunc, title, label }) => {
   
   
     const handleSubmit = async () => {
-      if(title === "Transfer Money" && userData.balanceAmount - amount < 0){
+      if(title === "Transfer Money" && balanceAmount - amount < 0){
         console.log("balace will go in negative");
         setSnackbarMessage("Balance cannot be negative")
         setSnackbarOpen(true)
@@ -33,21 +35,21 @@ const UserInput = ({ snackMessage, TransactionFunc, title, label }) => {
         return
       }
       setDisableButton(true)
-      if (userData.username) {
+      if (username) {
         if (amount && description) {
           const data = {
-            username: userData.username,
+            username: username,
             amount: amount,
             description: description,
           };
   
           const response = await TransactionFunc(data);  
           const state = {
-            username: userData.username,
+            username: username,
             balanceAmount: response.balanceAmount,
             reservedFunds: response.reservedFunds
           };
-          setUserData(state);
+          setUserDataToStore(state);
           setamount("");
           setDescription("");
           setSnackbarOpen(true);
@@ -69,7 +71,7 @@ const UserInput = ({ snackMessage, TransactionFunc, title, label }) => {
     const handleAmountChange = (event) => {
       const value = event.target.value;
       setamount(value);
-      if (userData.username) {
+      if (username) {
         if(value){
           if (value < 0) {
             setError(true);
@@ -116,7 +118,7 @@ const UserInput = ({ snackMessage, TransactionFunc, title, label }) => {
               marginBottom: 2,
               width: "100%",
               borderRadius: 20,
-              ...TextFieldStyle,
+              ...TextFieldStyleHomePage,
             }}
             id="amount"
             label="Amount"
@@ -135,7 +137,7 @@ const UserInput = ({ snackMessage, TransactionFunc, title, label }) => {
               marginBottom: 2,
               width: "100%",
               borderRadius: 20,
-              ...TextFieldStyle,
+              ...TextFieldStyleHomePage,
             }}
             id="description"
   

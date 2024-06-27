@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Container,
   Typography,
@@ -14,13 +14,16 @@ import {
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { getNotificationsAction, reserveFundNotificationResponse } from '../actions/notificationAction';
-import { UserContext } from '../App';
 import SlideSnackbar from '../components/SlideSnackbar';
+import { useUserDataStore } from '../store/store';
+import { checkAccountBalanceAction } from '../actions/moneyAction';
 
 const NotificationPage = () => {
   const [notifications, setNotifications] = useState([]);
-  const { userData } = useContext(UserContext)
-  const username = localStorage.getItem('userCred')
+  
+  const { username, balanceAmount, reservedFunds } = useUserDataStore(state => state.userData)
+  const setUserDataToStore = useUserDataStore(state => state.setStoreUserData)
+
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("Request Accepted")
 
@@ -33,8 +36,18 @@ const NotificationPage = () => {
     fetchNotifications();
   }, []);
 
+  const updateBalanceAndReserved = async () => {
+    const response = await checkAccountBalanceAction(username);
+      const data = {
+        username: username,
+        balanceAmount: response?.balanceAmount,
+        reservedFunds: response?.reservedFunds,
+      };
+      setUserDataToStore(data);
+  }
+
   const handleNotificationAction = async ({ goalName, bankStatus, index, reserveAmount }) => {
-    if(userData.balanceAmount - userData.reservedFunds - parseFloat(reserveAmount) < 1000){
+    if(balanceAmount - reservedFunds - parseFloat(reserveAmount) < 1000){
       console.log("cannot be below 1000");
       setSnackbarOpen(true)
       setSnackbarMessage("Reserved amount cannot go above minimum 1000 account balance")
@@ -46,7 +59,8 @@ const NotificationPage = () => {
       bankStatus,
       reserveAmount
     }
-    reserveFundNotificationResponse(data)
+    await reserveFundNotificationResponse(data)
+    updateBalanceAndReserved()
 
     const updatedNotifications = [...notifications];
     updatedNotifications[index].notificationStatus = bankStatus;

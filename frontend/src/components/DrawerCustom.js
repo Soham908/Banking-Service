@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import {
   Drawer,
   List,
@@ -19,7 +19,7 @@ import MenuIcon from "@mui/icons-material/Menu"
 import { useNavigate } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { UserContext } from "../App";
+import { useUserDataStore } from "../store/store";
 
 const DrawerCustom = () => {
 
@@ -27,7 +27,7 @@ const DrawerCustom = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const { userData } = useContext(UserContext)
+  const userDataFromStore = useUserDataStore(state => state?.userData.username)
 
   const toggleDrawer = () => {
     setOpenDrawer(!openDrawer);
@@ -60,7 +60,7 @@ const DrawerCustom = () => {
       <Toolbar>
           <AccountCircleIcon sx={{ width: 33, height: 33, color: 'wheat' }}/>
           <Typography sx={{ marginLeft: 1, fontSize: 22 }}>
-            {userData?.username}
+            { userDataFromStore }
           </Typography>
         </Toolbar>
       <Divider sx={{ backgroundColor: 'wheat' }}/>
