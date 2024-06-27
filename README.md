@@ -79,6 +79,8 @@ The main goal of this web app is to provide a banking API service to users who w
 ## API Documentation
 
 This section provides detailed documentation for the API endpoints available in this project. The API is divided into two main sections: `/userAuth` and `/userMoney`.
+The API documentation currently is sort of outdated, will change and add all the additional routes that were created. Some api routes response data was also changed.
+Will post the entire API documentation of the base path of the api link possibly.
 
 ### `/userAuth` Endpoints
 
