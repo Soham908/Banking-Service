@@ -72,6 +72,7 @@ const RegisterPage = () => {
           }}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          autoComplete="off"
         />
         <TextField
           label="Password"

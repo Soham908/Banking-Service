@@ -1,22 +1,22 @@
 export const TextFieldStyle = {
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: "#FFFFFF3A",
-      },
-      "&:hover fieldset": {
-        borderColor: "lightgray",
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "lightgray",
-      },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "lightblue",
     },
-    "& .MuiInputLabel-root": {
-      color: "#FFFFFFAA",
+    "&:hover fieldset": {
+      borderColor: "lightgray",
     },
-    "& .MuiInputLabel-root.Mui-focused": {
-      color: "lightgray",
+    "&.Mui-focused fieldset": {
+      borderColor: "#5555FF",
     },
-    "& input": {
-      color: "white",
-    },
-  };
+  },
+  "& .MuiInputLabel-root": {
+    color: "lightblue",
+  },
+  "& .MuiInputLabel-root.Mui-focused": {
+    color: "lightblue",
+  },
+  "& input": {
+    color: "white",
+  },
+};
