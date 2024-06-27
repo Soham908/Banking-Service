@@ -130,8 +130,7 @@ exports.releaseFundsRequestControllerFund = async (req, res) => {
     );
 
     if (notification.notificationStatus === "verified") {
-      const releaseAmount = notification.notificationAmount;
-      releaseFunds.reservedFunds -= parseFloat(releaseAmount);
+      releaseFunds.reservedFunds -= parseFloat(data.goalAmount);
     } else if (notification.notificationStatus === "pending") {
       notification.notificationStatus = "rejected";
     } else

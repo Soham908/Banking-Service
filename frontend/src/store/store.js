@@ -4,7 +4,7 @@ import { persist } from "zustand/middleware";
 export const useUserDataStore = create(
   persist(
     (set) => ({
-      userData: { message: "hellow im under the whebrkwhe" },
+      userData: {},
       setStoreUserData: (newUserData) => set({ userData: newUserData }),
     }),
     {
