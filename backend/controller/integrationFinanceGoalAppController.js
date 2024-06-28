@@ -80,6 +80,7 @@ exports.reserveFundsResponseControllerFunc = async (req, res) => {
 exports.reserveFundsAmountUpdatedControllerFunc = async (req, res) => {
   try {
     const data = req.body;
+    console.log(data);
     const userData = await userModel.findOne({ username: data.username });
     if (
       userData.balanceAmount -
@@ -87,7 +88,9 @@ exports.reserveFundsAmountUpdatedControllerFunc = async (req, res) => {
         data.goalMoreReserveAmount >=
       1000
     ) {
-      userData.reservedFunds += data.goalMoreReserveAmount;
+      if (data.goalBankVerificationStatus === 'verified'){
+        (userData.reservedFunds += data.goalMoreReserveAmount);
+      }
       userData.notificationList.push({
         notificationContent: data.goalName,
         notificationAmount: data.goalMoreReserveAmount,
