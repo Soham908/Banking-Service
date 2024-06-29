@@ -7,10 +7,10 @@ exports.addMoneyToAccountControllerFunc = async (req, res) => {
   const addMoney = await userModel.findOneAndUpdate(
     { username: req.body.username },
     {
-      $inc: { balanceAmount: req.body.amount },
+      $inc: { balanceAmount: req.body.transactionAmount },
       $push: {
         transactionHistory: {
-          amount: req.body.amount,
+          amount: req.body.transactionAmount,
           description: req.body.description,
           transactionType: "Debit",
         },
@@ -29,14 +29,21 @@ exports.addMoneyToAccountControllerFunc = async (req, res) => {
 // the route for this function => /api/money/transfer-money-from-account
 // post method
 exports.transferMoneyFromAccountControllerFunc = async (req, res) => {
-  const amt = parseFloat(req.body.amount) * -1;
+  const amount = parseFloat(req.body.transactionAmount) * -1;
+  const data = req.body
+  const transferMoney2 = await userModel.findOne({ username: data.username })
+
+  if( transferMoney2.balanceAmount - transferMoney2.reservedFunds - data.transactionAmount ){
+    
+  }
+
   const transferMoney = await userModel.findOneAndUpdate(
     { username: req.body.username },
     {
-      $inc: { balanceAmount: amt },
+      $inc: { balanceAmount: amount },
       $push: {
         transactionHistory: {
-          amount: amt,
+          amount: amount,
           description: req.body.description,
           transactionType: "Credit",
         },

@@ -39,7 +39,7 @@ const UserInput = ({ snackMessage, TransactionFunc, title, label }) => {
         if (amount && description) {
           const data = {
             username: username,
-            amount: amount,
+            transactionAmount: amount,
             description: description,
           };
   
