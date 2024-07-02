@@ -46,6 +46,9 @@ The main goal of this web app is to provide a banking API service to users who w
 
 ### Installation
 
+You can directly run container of this application using this docker image which is available publicly on dockerhub
+
+
 1. Clone the repo:
    ```sh
    git clone https://github.com/yourusername/banking-service.git
