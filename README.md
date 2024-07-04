@@ -27,6 +27,7 @@ The main goal of this web app is to provide a banking API service to users who w
 - Transfer Money Between Accounts
 - View Transaction History
 - View user account balance
+- Responsive UI, mobile responsive UI
 
 
 ## Screenshots
