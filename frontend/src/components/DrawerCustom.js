@@ -15,6 +15,7 @@ import {
 import HomeIcon from "@mui/icons-material/Home";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import LoginIcon from "@mui/icons-material/Login"
+import Logout from "@mui/icons-material/Logout"
 import MenuIcon from "@mui/icons-material/Menu"
 import { useNavigate } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"
@@ -28,6 +29,7 @@ const DrawerCustom = () => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const userDataFromStore = useUserDataStore(state => state?.userData.username)
+  const setStoreUserData = useUserDataStore(state => state.setStoreUserData)
 
   const toggleDrawer = () => {
     setOpenDrawer(!openDrawer);
@@ -69,7 +71,13 @@ const DrawerCustom = () => {
           { text: "HomePage", icon: <HomeIcon />, onClick: () => {navigate("/"); toggleDrawer()} },
           { text: "Transaction History", icon: <AccountBalanceWalletIcon />, onClick: () => {navigate("/transactions"); toggleDrawer()} },
           { text: "Notifications", icon: <NotificationsIcon />, onClick: () => {navigate("/notifications"); toggleDrawer()} },
-          { text: "Login", icon: <LoginIcon />, onClick: () => {navigate("/login"); toggleDrawer()}}
+          { text: "Login", icon: <LoginIcon />, onClick: () => {navigate("/login"); toggleDrawer()}},
+          { text: "Logout", icon: <Logout />, onClick: () => {
+            localStorage.removeItem('userCred')
+            setStoreUserData({})
+            toggleDrawer();
+            navigate("/"); 
+          }}
         ].map((item, index) => (
           <ListItemButton
             key={item.text}

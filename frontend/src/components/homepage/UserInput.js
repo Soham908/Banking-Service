@@ -58,8 +58,6 @@ const UserInput = ({ snackMessage, TransactionFunc, title, label }) => {
             setSnackbarMessage(snackMessage);
           }
           else{
-            setamount("");
-            setDescription("");
             setSnackbarOpen(true);
             setSnackbarMessage(response.message);
           }
@@ -143,6 +141,7 @@ const UserInput = ({ snackMessage, TransactionFunc, title, label }) => {
             helperText={helperText}
             inputProps={{ min: 0 }}
             required
+            autoComplete="off"
           />
   
           <TextField
@@ -163,6 +162,7 @@ const UserInput = ({ snackMessage, TransactionFunc, title, label }) => {
             onChange={(event) => {
               setDescription(event.target.value);
             }}
+            autoComplete="off"
           />
   
           <Button
