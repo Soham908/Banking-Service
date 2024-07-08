@@ -42,18 +42,31 @@ const UserInput = ({ snackMessage, TransactionFunc, title, label }) => {
             transactionAmount: amount,
             description: description,
           };
-  
-          const response = await TransactionFunc(data);  
-          const state = {
-            username: username,
-            balanceAmount: response.balanceAmount,
-            reservedFunds: response.reservedFunds
-          };
-          setUserDataToStore(state);
-          setamount("");
-          setDescription("");
+
+          const response = await TransactionFunc(data);
+          console.log(response);
+          if (response.success) {
+            const state = {
+              username: username,
+              balanceAmount: response.balanceAmount,
+              reservedFunds: response.reservedFunds,
+            };
+            setUserDataToStore(state);
+            setamount("");
+            setDescription("");
+            setSnackbarOpen(true);
+            setSnackbarMessage(snackMessage);
+          }
+          else{
+            setamount("");
+            setDescription("");
+            setSnackbarOpen(true);
+            setSnackbarMessage(response.message);
+          }
+        }
+        else{
           setSnackbarOpen(true);
-          setSnackbarMessage(snackMessage)
+          setSnackbarMessage("Please fill in all the fields");
         }
       } else {
         setSnackbarMessage("Please Login to use this");
